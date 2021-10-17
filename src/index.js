@@ -45,7 +45,7 @@ d3.csv(dataURL).then ( data => {
     // Agregar tooltip a cada barra
     barras.append('div')
         .classed("tooltip", true)
-        .text( d => d.ue) // Agrega texto dentro
+        .text( d => `${d.ue}%`) // Agrega texto dentro
 
 
     
