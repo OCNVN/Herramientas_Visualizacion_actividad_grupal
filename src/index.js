@@ -45,8 +45,8 @@ d3.csv(dataURL).then ( data => {
     // Agregar tooltip a cada barra
     barras.append('div')
         .classed("tooltip", true)
-        .text( d => `${d.ue}%`) // Agrega texto dentro
-
+        .html(d => `<span>${d.ue}%</span><span>${d.periodo}/${d['Año']}</span>`)
+        // .text( d => ``) // Agrega texto dentro
 
     
     // Mostrar en tabla
