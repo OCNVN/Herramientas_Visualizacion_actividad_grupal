@@ -3,7 +3,7 @@ import * as d3 from "d3";
 require("file-loader?name=data/desempleo_ue_y_eurozona.csv!./data/desempleo_ue_y_eurozona.csv");
 const dataURL = "http://localhost:8080/data/desempleo_ue_y_eurozona.csv";
 
-d3.csv (dataURL).then ( data => {
+d3.csv(dataURL).then ( data => {
     window.dataGlobal = data //Hace global a una determinada variable
 
     d3.select(".grafico")
@@ -15,7 +15,7 @@ d3.csv (dataURL).then ( data => {
         .attr("class", () => "value") // Agregar estilo
         .style( "height", d => `${d.ue * 10}px`) // Asignar alto
         .text( d => d.ue) // Agrega texto dentro
-        .style( "background-color", function(d) {
+        .style( "background-color", d => {
 
             //Saca el valor máximo y el valor mínimo de la tabla
             var divs = document.querySelectorAll(".value");
@@ -23,8 +23,6 @@ d3.csv (dataURL).then ( data => {
             for(var i = 0; i < divs.length; i++){
                 arr.push(document.getElementsByClassName('value')[i].innerHTML);
             }
-
-            //console.log(arr); //Comprobar se está obteniendo los valores de los divs
             
             //Toma los valores mínimo y luego máximo para el calculo de colores
             var min = Math.min.apply(null, arr);
@@ -57,46 +55,9 @@ d3.csv (dataURL).then ( data => {
             d3.select(event.target)
                 .style("position", "unset");
         });
-})
 
- //Creación de eje inferior
-
-    // Creación de una escala
- var scale = d3.scaleLinear()
- .domain([0, 68]) //total de 68 meses
- .range([0, 900]);
-
-    // Creación de un eje
-var axis = d3.axisBottom(scale)
-
-// Seleccionamos el grupo dentro del svg
-d3.select('.eje')  
- .attr("transform", "translate(55, 0)") // Se alínea a la derecha
- .call(axis);  // Se inserta el eje
-
- //Creación de eje izquierdo
-
-    // Creación de una escala
- var scale2 = d3.scaleLinear()
- .domain([11, 0]) //Hasta 11%
- .range([0, 110]);
-
-    // Creación de un eje
-var axis2 = d3.axisLeft(scale2)
-
-// Seleccionamos el grupo dentro del svg
-d3.select('.eje2')  
- .attr("transform", "translate(30, 70)") // Se alínea a la derecha y abajo
- .call(axis2);  // Se inserta el eje
-
-
-
-//Tabla de data
-
-
-//Para mostrar los data como tabla
-d3.csv (dataURL).then ( function(data) {
-
+    
+    // Mostrar en tabla
     var elementoUl = d3.select(".tabla").append('ul');
 
     elementoUl
@@ -105,9 +66,6 @@ d3.csv (dataURL).then ( function(data) {
         .enter()
         .append('li')
         .text( function(d) {return d.Año})
-});
-
-d3.csv (dataURL).then ( function(data) {
 
     var elementoUl = d3.select(".tabla").append('ul');
 
@@ -117,9 +75,6 @@ d3.csv (dataURL).then ( function(data) {
         .enter()
         .append('li')
         .text( function(d) {return d.periodo})
-});
-
-d3.csv (dataURL).then ( function(data) {
 
     var elementoUl = d3.select(".tabla").append('ul');
 
@@ -129,4 +84,34 @@ d3.csv (dataURL).then ( function(data) {
         .enter()
         .append('li')
         .text( function(d) {return d.ue + "%"})
-});
+})
+
+ //Creación de eje inferior
+
+// Creación de una escala
+ var scale = d3.scaleLinear()
+ .domain([0, 68]) //total de 68 meses
+ .range([0, 900]);
+
+// Creación de un eje
+var axis = d3.axisBottom(scale)
+
+// Seleccionamos el grupo dentro del svg
+d3.select('.eje')  
+ .attr("transform", "translate(55, 0)") // Se alínea a la derecha
+ .call(axis);  // Se inserta el eje
+
+//Creación de eje izquierdo
+
+// Creación de una escala
+ var scale2 = d3.scaleLinear()
+ .domain([11, 0]) //Hasta 11%
+ .range([0, 110]);
+
+// Creación de un eje
+var axis2 = d3.axisLeft(scale2)
+
+// Seleccionamos el grupo dentro del svg
+d3.select('.eje2')  
+ .attr("transform", "translate(30, 70)") // Se alínea a la derecha y abajo
+ .call(axis2);  // Se inserta el eje
