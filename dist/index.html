@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad grupal</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            font-family: sans-serif;
+            font-weight: 200;
+        }
+
+        .ejeLeft { 
+            grid-area: lft;
+            width: auto;
+        }
+        .ejeBottom { 
+            grid-area: btm;
+        }
+
+        .grafico {
+            grid-area: graf;
+            display: grid;
+            align-items: end;
+            grid-auto-flow: column;
+            padding: 25px;
+            margin-left: 30px;
+            color: transparent;
+            width: 900px;
+        }
+
+        .contenedor {
+            display: grid;
+            grid-template-areas:
+            'lft graf'
+            'lft btm';
+            width: 900px;
+        }
+
+        .value {
+            width: 10px;
+            font-size: x-large;
+            font-weight: bolder;
+        }
+
+        .eje {
+            fill: none;
+            stroke: #000;
+        } 
+
+        .eje2 {
+            fill: none;
+            stroke: #000;
+        } 
+
+        .tabla {
+            display: flex;
+            justify-content: center;
+        }
+
+        .tabla li {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tasa de desempleo en la Unión Europea y la Euro Zona</h1>
+    <h2>Enero de 2015 - Agosto de 2021</h2>
+
+    <div class="contenedor">
+
+        <svg class="ejeLeft" width="100%" height="100%">
+            <g class="eje2">
+        </svg>
+    
+        <div class="grafico"></div>
+
+        <svg class="ejeBottom" width="100%" height="100%">
+            <g class="eje">
+        </svg>
+
+    </div>
+
+    <hr style="width: 50%;">
+
+    <h2>Tabla</h2>
+
+    <div class="tabla"></div>
+    <script src="main.js"></script>
+</body>
+</html>
