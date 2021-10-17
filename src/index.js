@@ -36,30 +36,28 @@ d3.csv (dataURL).then ( data => {
             var r = 255 - g;
             return "rgb(" + r + "," + g + ", 0)"
         })
-        .style( "margin-top", "50px");
+        .style( "margin-top", "50px")
+        .on("mouseover", event => {
+            d3.select(event.target)
+                .attr("z-index", 1000);
+
+            d3.select(event.target)
+                .style("color", "black");
+
+            d3.select(event.target)
+                .style("position", "relative");
+        })
+        .on("mouseout", event => {
+            d3.select(event.target)
+                .attr("z-index", 0);
+
+            d3.select(event.target)
+                .style("color", "transparent");
+
+            d3.select(event.target)
+                .style("position", "unset");
+        });
 })
-
-//Funciones para aparecer o desaparecer el valor de la barra seleccionada
-
-    //Aparecer
-document.onmouseover = function(e) {
-    var targ;
-    if (!e) var e = window.event;
-    if (e.target) targ = e.target;
-    //console.log(targ.id); //Verificar que está seleccionando el Id
-    document.getElementById(targ.id).style.zIndex = 1000;
-    document.getElementById(targ.id).style.color = "black";
- }
-    //Desaparecer
- document.onmouseout = function(e) {
-    var targ;
-    if (!e) var e = window.event;
-    if (e.target) targ = e.target;
-    //console.log(targ.id); //Verificar que está seleccionando el Id
-    document.getElementById(targ.id).style.zIndex = 0;
-    document.getElementById(targ.id).style.color = "transparent";
- }
-
 
  //Creación de eje inferior
 
