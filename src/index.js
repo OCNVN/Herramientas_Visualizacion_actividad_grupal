@@ -3,26 +3,18 @@ import * as d3 from "d3";
 require("file-loader?name=data/desempleo_ue_y_eurozona.csv!./data/desempleo_ue_y_eurozona.csv");
 const dataURL = "http://localhost:8080/data/desempleo_ue_y_eurozona.csv";
 
-d3.csv (dataURL).then ( function(data) {
+d3.csv (dataURL).then ( data => {
     window.dataGlobal = data //Hace global a una determinada variable
 
     d3.select(".grafico")
-        .selectAll('div') //Selección de todos los elemnentos div que se van creando
-        .data(data) //Agrega data
-        .enter() //Conecta los data con los elementos del DOM
-        .append('div') //Agrega un elemento div en cada iteración
-        .attr("id", function(d, i) { //Agrega un atributo
-            return "a" + i
-        })
-        .attr("class", function(d) {
-            return "value"
-        })
-        .style( "height", function(d) { //Edita el estilo del div (ancho)
-            return (d.ue) * 10 + "px";
-        })
-        .text( function(d) { //Edita el texto
-            return d.ue;
-        })
+        .selectAll('div') // Seleccionar todos los elementos div dentro de la selección
+        .data(data) // Los datos en base a los cuales se crearan los elementos
+        .enter() // Conecta los data con los elementos del DOM
+        .append('div') // Agrega un elemento div en cada iteración
+        .attr("id", (d, i) => `a${i}`) // Asignar id a cada elemento
+        .attr("class", () => "value") // Agregar estilo
+        .style( "height", d => `${d.ue * 10}px`) // Asignar alto
+        .text( d => d.ue) // Agrega texto dentro
         .style( "background-color", function(d) {
 
             //Saca el valor máximo y el valor mínimo de la tabla
