@@ -4,57 +4,49 @@ require("file-loader?name=data/desempleo_ue_y_eurozona.csv!./data/desempleo_ue_y
 const dataURL = "http://localhost:8080/data/desempleo_ue_y_eurozona.csv";
 
 d3.csv(dataURL).then ( data => {
-    window.dataGlobal = data //Hace global a una determinada variable
 
-    d3.select(".grafico")
+    const porcentajes = data.map(d => d.ue);
+
+    const porcentajeMinimo = Math.min.apply(null, porcentajes);
+    const porcentajeMaximo = Math.max.apply(null, porcentajes);
+
+    const barras = d3.select(".grafico")
         .selectAll('div') // Seleccionar todos los elementos div dentro de la selección
         .data(data) // Los datos en base a los cuales se crearan los elementos
         .enter() // Conecta los data con los elementos del DOM
         .append('div') // Agrega un elemento div en cada iteración
         .attr("id", (d, i) => `a${i}`) // Asignar id a cada elemento
-        .attr("class", () => "value") // Agregar estilo
+        .classed("bar", true) // Agregar estilo
         .style( "height", d => `${d.ue * 10}px`) // Asignar alto
-        .text( d => d.ue) // Agrega texto dentro
         .style( "background-color", d => {
-
-            //Saca el valor máximo y el valor mínimo de la tabla
-            var divs = document.querySelectorAll(".value");
-            var arr = [];
-            for(var i = 0; i < divs.length; i++){
-                arr.push(document.getElementsByClassName('value')[i].innerHTML);
-            }
-            
-            //Toma los valores mínimo y luego máximo para el calculo de colores
-            var min = Math.min.apply(null, arr);
-            var max = Math.max.apply(null, arr);
-
-            //Asigna los colores dependiendo de la tasa de desempleo
-            var x = max - d.ue;
-            var g = (255 * x)/min;
+            // Asigna los colores dependiendo de la tasa de desempleo
+            var x = porcentajeMaximo - d.ue;
+            var g = (255 * x)/porcentajeMinimo;
             var r = 255 - g;
             return "rgb(" + r + "," + g + ", 0)"
         })
-        .style( "margin-top", "50px")
-        .on("mouseover", event => {
-            d3.select(event.target)
-                .attr("z-index", 1000);
+        .style( "margin-top", "50px");
 
-            d3.select(event.target)
-                .style("color", "black");
 
-            d3.select(event.target)
-                .style("position", "relative");
-        })
-        .on("mouseout", event => {
-            d3.select(event.target)
-                .attr("z-index", 0);
+    // Control de eventos de mouse para mostrar el valor de cada barra
+    // dependiendo de la posicion del raton modifica el css de la barra
+    barras.on("mouseover", event => {
+        const barra = d3.select(event.target);
+        barra.classed("bar-mousehover", true);
+        barra.classed("bar-mouseout", false);
+    })
+    barras.on("mouseout", event => {
+        const barra = d3.select(event.target);
+        barra.classed("bar-mousehover", false);
+        barra.classed("bar-mouseout", true);
+    });
 
-            d3.select(event.target)
-                .style("color", "transparent");
 
-            d3.select(event.target)
-                .style("position", "unset");
-        });
+    // Agregar tooltip a cada barra
+    barras.append('div')
+        .classed("tooltip", true)
+        .text( d => d.ue) // Agrega texto dentro
+
 
     
     // Mostrar en tabla

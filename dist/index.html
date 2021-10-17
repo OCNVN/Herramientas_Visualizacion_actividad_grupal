@@ -45,10 +45,28 @@
             width: 900px;
         }
 
-        .value {
+        .bar {
             width: 10px;
             font-size: x-large;
             font-weight: bolder;
+        }
+
+        .bar-mousehover {
+            z-index: 1000;
+            color: black;
+            position: relative;
+        }
+
+        .bar-mousehover .tooltip{
+            position: absolute;
+            z-index: 1000;
+            background-color: yellow;
+            color: black;
+        }
+
+        .bar-mouseout {
+            z-index: 0;
+            color: transparent;
             position: unset;
         }
 
