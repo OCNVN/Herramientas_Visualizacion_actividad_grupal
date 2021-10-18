@@ -101,6 +101,67 @@
         .tabla li {
             list-style: none;
         }
+
+
+
+
+
+        /* Style the lines by removing the fill and applying a stroke */
+        .line {
+            fill: none;
+            stroke: #ffab00;
+            stroke-width: 3;
+        }
+
+        .line-euz {
+            fill: none;
+            stroke: #8899FF;
+            stroke-width: 3;
+        }
+        
+        .overlay {
+        fill: none;
+        pointer-events: all;
+        }
+
+        /* Style the dots by assigning a fill and stroke */
+        .dot {
+            fill: #ffab00;
+            stroke: #fff;
+        }
+
+        .dot-euz {
+            fill: #8899FF;
+            stroke: #fff;
+        }
+        
+        .focus circle {
+            fill: none;
+            stroke: steelblue;
+        }
+
+        .tooltip-area-eu {
+            background-color: #ffab00;
+            width: 120px;
+            text-align: center;
+            padding: 6px;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .tooltip-area-euz {
+            background-color: #8899FF;
+            width: 120px;
+            text-align: center;
+            padding: 6px;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .tooltip-area-eu__text, .tooltip-area-euz__text {
+            display: flex;
+            flex-direction: column;
+        }
     </style>
 </head>
 
@@ -108,25 +169,33 @@
     <h1>Tasa de desempleo en la Unión Europea y la Euro Zona</h1>
     <h2>Enero de 2015 - Agosto de 2021</h2>
 
-    <div class="contenedor">
+    <div id="contenedor-linec-chart">
+        <div id="line-chart"></div>
+        <div class="tooltip-area-eu">
+            <div class="tooltip-area-eu__text"></div>
+        </div>
+        <div class="tooltip-area-euz">
+            <div class="tooltip-area-euz__text"></div>
+        </div>
+    </div>
 
+    <div class="contenedor">
         <svg class="ejeLeft" width="100%" height="100%">
             <g class="eje2">
         </svg>
-    
         <div class="grafico"></div>
-
         <svg class="ejeBottom" width="100%" height="100%">
             <g class="eje">
         </svg>
-
     </div>
+
+    
 
     <hr style="width: 50%;">
 
-    <h2>Tabla</h2>
+    <!-- <h2>Tabla</h2>
 
-    <div class="tabla"></div>
+    <div class="tabla"></div> -->
     <script src="main.js"></script>
 </body>
 </html>
